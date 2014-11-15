@@ -1,3 +1,12 @@
 This repository contains all codes(python,bash,f77) for wave gradiometry
 
+
+pre_process:
+codes for processing raw data downloaded from IRIS
+
+process:
+calculate four parameters
+
+post_process:
+stack,plots,etc.
 More needs to be done
