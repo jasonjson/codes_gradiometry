@@ -1,10 +1,11 @@
 #!/usr/bin/env python
+#create geometry.dat 
 
 import commands
 from numpy import arange
 
 def create_geometry():
-    cmd = 'saclst stlo stla f *.z | awk \'{print $2,$3}\' | minmax -I3 '
+    cmd = 'awk \'{print $3,$4}\' header_all | minmax -I3 '
     (status,output) = commands.getstatusoutput(cmd)
     lon_lat_minmax = output[2:].split('/')
     lon = arange(float(lon_lat_minmax[0]),float(lon_lat_minmax[1])+1,0.5)
