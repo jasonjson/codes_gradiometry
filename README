@@ -8,6 +8,7 @@ codes for processing raw data downloaded from IRIS
 3)create bad file which contains bad stations
 4)run 'remove_reponse_origtime.sh' 
 #remove instrumental response and modify original time (find nzyear nzjday .. from TA.Q*z file)
+#geometry.dat is already created, produce edge_loction.txt if necessary
 5)
 #filter the waveforms to the desired frequency bands
 
