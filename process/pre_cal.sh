@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir final_para  #folder for final results
+
 N=`wc -l header_all | awk '{print $1}'`
 M=`expr $N / 30 `
 P=`expr $N / 30 + 1`

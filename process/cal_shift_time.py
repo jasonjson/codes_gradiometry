@@ -6,11 +6,12 @@ from obspy.core.util.geodetics import gps2DistAzimuth
 from math import sin, cos, pi
 
 
-f_velo = open('../velo_start','r')
+f_velo = open('velo_start','r')
+f_azi = open('master_azi','r')
 f_master = open('master_sta','r')
 f_shift = open('shift_time','w')
 master_info = f_master.read().split()
-master_azi = float(master_info[4])
+master_azi = float(f_azi.read())
 master_lon = float(master_info[2])
 master_lat = float(master_info[3])
 velo = float(f_velo.read())  
