@@ -17,6 +17,7 @@ process:
 inside each Period_* folder
 1) run 'pre_cal.sh' to create main program for stations
 2) run 'find_subarry.py' to create folder for each master station and put supporting stations inside
+3) run main program 'xx'
 
 
 post_process:
