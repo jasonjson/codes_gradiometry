@@ -1,0 +1,37 @@
+#!/bin/bash
+make_geometry_new2
+
+make_sparse_geometry                              # run sparse version of make_geometry
+
+make_raw_spline_fit_dat				# above steps are commented out for now
+
+make_x_for_fit_wg<<!
+0 0 0
+!
+
+make_null_input_with_variance_wg<<!
+$1
+0.25
+!
+
+process_prepare_gps
+
+cp latlong_gps.dat output.dat || exit 1
+
+make_x_for_output_wg<<!
+0 0 0
+!			
+
+make_x_for_fit_wg<<!
+0 0 0
+!
+                                     
+sparse_fit_with_GPS_wg<<!
+N
+Y
+N
+!
+
+sparse_strain_wg<<!
+Y
+!
