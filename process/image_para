@@ -1,0 +1,78 @@
+#!/bin/bash
+
+plot_results() {
+
+blockmean sigma_c.dat $R  -I6m -V > sigma_r.dat
+surface sigma_r.dat  -Ggm0.grd -I2m  -R -T0.2
+grdraster 9 $R -I2m -Gout.grd
+grdgradient out.grd -A0 -Nt -Gtopo.grd
+psbasemap $R $J -Ba4f2/a4f2WSen -K -V -X2.0 -Y2.0i -P > $M
+makecpt -Chaxby -I $T -Z > vel.cpt
+grdimage gm0.grd  -Itopo.grd -Cvel.cpt  -R -J -O -V -K >> $M
+grdcontour gm0.grd  -R -J -Cvel.cpt -B  -A-  -O -K -S6m -V >> $M
+psxy edge_location.txt -R -J -O -K -G255 -L -W1 -V >> $M 
+pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
+#awk '{printf "-77 29 15 0 1 BL Period:%.0fs",1/$1}' ../freq_one > time.dat
+#pstext time.dat -R -J -P -O -K -V >> $M
+psscale -Cvel.cpt -D2i/-0.5i/3.48i/0.2ih -O -B$text1:"$text2":/:"$text3": -E >> $M 
+
+}
+
+#set up R J parameter
+awk '{print $3,$4}' ../header_all > st.txt
+R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
+J="-Jm0.5"
+
+#plot dynamical phase velocty
+paste st.txt dyna_velo > sigma_c.dat
+M=`awk -F_ '{printf "dyna_velo%.0fs.ps",$2}' ../period`
+T="-T3/4/0.1"
+text1="0.2f0.2"
+text2="Dynamical phase velcocity"
+text3="km/s"
+plot_results
+
+#plot structural phase velocity
+awk '{print $1,$2,$7}' stru_velo > sigma_c.dat
+M=`awk -F_ '{printf "stru_velo%.0fs.ps",$2}' ../period`
+T="-T3/4/0.1"
+text1="0.2f0.2"
+text2="Structural phase velocity"
+text3="km/s"
+plot_results
+
+#plot correction
+paste stru_velo dyna_velo | awk '{print $1,$2,($7-$8)*1000}' > sigma_c.dat
+M=`awk -F_ '{printf "velo_correction%.0fs.ps",$2}' ../period`
+T="-T-500/500/25"
+text1="100f50"
+text2="velocity correction"
+text3="m/s"
+plot_results
+
+#plot radiation pattern
+awk '{if($4>=-50 && $4<=50 && $4!=0) print $1,$2,$4}' azi_rad_geo_all > sigma_c.dat
+M=`awk -F_ '{printf "radiation_pattern_%.0fs.ps",$2}' ../period`
+T="-T-50/50/10"
+text1=""
+text2="Radiation pattern"
+text3="1\deg"
+plot_results
+
+#plot geometrical spreading
+awk '{if($5*1000>=-5 && $5*1000<=5 && $5!=0) print $1,$2,$5}' azi_rad_geo_all > sigma_c.dat
+M=`awk -F_ '{printf "geometrical_spreading_%.0fs.ps",$2}' ../period`
+T="-T-5/5/1"
+text1=""
+text2="Geometrical spreading"
+text3="1/1000km"
+plot_results
+
+#plot azimuth variation
+awk '{if($3>=-30 && $3<=30 && $3!=0) print $1,$2,$3}' azi_rad_geo_all > sigma_c.dat
+M=`awk -F_ '{printf "azimuth_variation_%.0fs.ps",$2}' ../period`
+T="-T-30/30/5"
+text1=""
+text2="Azimuth variation"
+text3='deg'
+plot_results

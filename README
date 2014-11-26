@@ -14,12 +14,8 @@ codes for processing raw data downloaded from IRIS
 #make sure only one Rayleigh phase is present, aftershocks may give other peaks
 
 process:
-inside each Period_* folder
-1) run 'pre_cal.sh' to create main program for stations
-2) run 'find_subarry.py' to create folder for each master station and put supporting stations inside
-3) run main program 'xx'
-
+1) copy 'main.sh' to the main folder
+3) run main program 'get_final.sh' to calculate parameters for each station and then structural phase velocity
 
 post_process:
-stack,plots,etc.
-More needs to be done
+stack

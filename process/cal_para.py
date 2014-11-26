@@ -14,6 +14,7 @@ master_info = f_master.read().split()
 master_tr = read(master_info[0])[0]
 master_azi = float(master_info[4])
 master_lat = master_info[3] #use the latitude of master station to find corresponding strain, amp and vel
+master_lon = master_info[2]
 master_dist = float(master_info[1])
 f_master.close()
 peak_time = int(master_tr.data.argmax() * master_tr.stats.delta)
@@ -91,6 +92,10 @@ Ax, Bx = np.linalg.lstsq(G,d_x)[0]
 #cal Ay,By
 d_y = np.array(Uzyy)
 Ay,By = np.linalg.lstsq(G,d_y)[0]
+#store Ax,Ay,Bx,By for amplitude correction and density
+f_AB=open('AB.dat','w')
+f_AB.write(master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By))
+f_AB.close()
 #get velocity for shifting
 f_old_velo = open('velo_start','r') #original velo
 old_vel = float(f_old_velo.read())
@@ -103,16 +108,11 @@ new_vel = 1. / sqrt(new_px ** 2+new_py ** 2)
 f_vel_new = open('velo_start','w')
 f_vel_new.write(str(new_vel))
 f_vel_new.close()
-#get azimuth varation
-f_azi_var = open('azi_var.dat','w')
+#get azimuth varation, radiation pattern and geometrical spreading
+f_azi_rad_geo = open('azi_rad_geo.dat','w')
 new_azi = atan2(new_px,new_py)*180/pi
 azi_var = new_azi - master_azi
-f_azi_var.write(str(azi_var))
-#get radiation pattern
-f_rad_patt = open('rad_patt.dat','w')
 rad_patt = master_dist * (Ax * cos(new_azi * pi / 180) - Ay * sin(new_azi * pi / 180))
-f_rad_patt.write(str(rad_patt))
-#get geometrical spreading
-f_geo_spread = open ('geo_spread.dat','w')
 geo_spread = Ax * sin(new_azi * pi / 180) - Ay * cos(new_azi * pi / 180)
-f_geo_spread.write(str(geo_spread))
+f_azi_rad_geo.write(master_lon+' '+master_lat+' '+str(azi_var)+' '+str(rad_patt)+' '+str(geo_spread))
+f_azi_rad_geo.close()

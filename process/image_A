@@ -1,0 +1,37 @@
+#!/bin/bash
+
+plot_strain() {
+
+blockmean sigma_c.dat $R   -I2m -V > sigma_r.dat
+surface sigma_r.dat  -Ggm0.grd -I2m  $R -T0.2
+grdraster 9 $R -I2m -Gout.grd
+grdgradient out.grd -A0 -Nt -Gtopo.grd
+psbasemap $R $J -Ba4f2/a4f2WSen  -K -V -X2.0 -Y2.0i -P > $M
+makecpt -Chaxby -I $T -Z > $CPT
+grdimage gm0.grd -Itopo.grd -C$CPT  $R $J -O -V -K >> $M 
+grdcontour gm0.grd $R $J -C$CPT -B  -A-  -O -K -S6m -V >> $M
+psxy  edge_location.txt $R $J -O -K -G255 -L -W1 -V >>$M
+#awk -F_ '{printf "-77 26 15 0 1 BL Period:%.0fs",1/$1}' ../period > time.dat
+pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
+#pstext time.dat -R -J -P -O -K -V >> $M
+
+
+psvelo vel1.gmt $R -W3 -G255/0/0 $S  -L -Jm -A0.15/0.18/0.17 -O -K  >>$M
+psvelo vel2.gmt $R -W3 -G0 $S  -L -Jm -A0.05/0.08/0.07 -O -K >>$M
+ 
+psvelo $R -W3 -G255/0/0 $S  -L -Jm -A0.15/0.18/0.17 -O -K<<EOT>>$M
+289 40 5 0 0   0 0 0
+EOT
+psscale -C$CPT -D2i/-0.5i/3.2i/0.2ih  -O -B50f25:"Laplacian of logrithmic amplitude":/:"10^-6 1/km^2": -K -E >>$M
+pstext  $R $J -P -O -V <<EOT>> $M 
+290 39 12 0.0 0 6 5x10^-3 1/km
+EOT
+}
+
+M=`awk -F_ '{printf "AxAy_%.0fs.ps",$2}' ../period`
+R="-R-88/-65/24/48"
+J="-Jm0.5"
+T="-T$1/$2/$3"
+CPT="shear2.cpt"
+S="-Se0.25/0.95/0"
+plot_strain

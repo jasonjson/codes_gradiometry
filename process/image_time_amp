@@ -1,0 +1,42 @@
+#!/bin/bash
+
+plot_results() {
+
+blockmean sigma_c.dat $R  -I6m -V > sigma_r.dat
+surface sigma_r.dat  -Ggm0.grd -I2m  -R -T0.2
+grdraster 9 $R -I2m -Gout.grd
+grdgradient out.grd -A0 -Nt -Gtopo.grd
+psbasemap $R $J -Ba4f2/a4f2WSen -K -V -X2.0 -Y2.0i -P > $M
+makecpt -Chaxby -I $T -Z > vel.cpt
+grdimage gm0.grd  -Itopo.grd -Cvel.cpt  -R -J -O -V -K >> $M
+grdcontour gm0.grd  -R -J -Cvel.cpt -B  -A-  -O -K -S6m -V >> $M
+psxy edge_location.txt -R -J -O -K -G255 -L -W1 -V >> $M 
+pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
+psxy st.txt -R -J -St0.05i -K -G0/0/0 -O  >> $M
+#awk '{printf "-77 26 15 0 1 BL Period:%.0fs",1/$1}' ../freq_one > time.dat
+#pstext time.dat -R -J -P -O -K -V >> $M 
+psscale -Cvel.cpt -D2i/-0.5i/3.48i/0.2ih  -O  -V -B$text1:"$text2":/:"$text3": -E >> $M
+}
+
+#set up R parameter 
+awk '{print $3,$4}' ../header_all > st.txt
+R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
+J="-Jm0.5"
+#plot peak amplitude arrival time
+cp ../travel_time  sigma_c.dat
+M=`awk -F_ '{printf "phase_travel_time%.0fs.ps",$2}' ../period`
+T=`minmax -C sigma_c.dat | awk '{printf "-T%d\/%d\/%d",$5-100,$6+100,50}'`
+text1="100f50"
+text2="Phase travel time"
+text3="s"
+plot_results
+
+#plot normalized peak amplitude
+M=`awk -F_ '{printf "peakamp_normalized_%.0fs.ps",$2}' ../period`
+T="-T0.2/2.2/0.2"
+text1="0.4f0.2"
+text2="Normalized Peak Amplitude"
+text3=""
+ave=`awk '{sum+=$3} END {print sum/NR}' ../peak_amp`
+awk -v a=$ave '{if($3/a>0.2 && $3/a<2)print $1,$2,$3/a }' ../peak_amp > sigma_c.dat
+plot_results
