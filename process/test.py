@@ -62,6 +62,7 @@ for t in arange(peak_time-100,peak_time+102,2):
     #produce Uzxx data
     system('mv GPS_raw_x.dat GPS_raw.dat')
     system('process_wg2 '+str(damping))
+    system('cp strain.out strain_x'+str(t))
     f_strain_x = open('strain.out','r')
     for line in f_strain_x.readlines():
         if re.search('^[\d\s]*'+master_lat,line):
@@ -69,6 +70,7 @@ for t in arange(peak_time-100,peak_time+102,2):
     #produce Uzyy data
     system('mv GPS_raw_y.dat GPS_raw.dat')
     system('process_wg2 '+str(damping))
+    system('cp strain.out strain_y'+str(t))
     f_strain_y = open('strain.out','r')
     for line in f_strain_y.readlines():
         if re.search('^[\d\s]*'+master_lat,line):
@@ -81,6 +83,16 @@ for t in arange(peak_time-100,peak_time+102,2):
         for i, line in enumerate(myfile,1):
             if master_lat in line:
                 Vx_y.append(vel_data[i-1])
+f_Uzxx=open('Uzxx.dat','w')
+for num in Uzxx:
+    f_Uzxx.write(str(num)+'\n')
+f_Uzxx.close()
+
+f_Uzyy=open('Uzyy.dat','w')
+for num in Uzyy:
+    f_Uzyy.write(str(num)+'\n')
+f_Uzyy.close()
+
 #cal Ax Bx
 U_V = []
 d_x = np.array(Uzxx)
