@@ -1,6 +1,8 @@
 #!/bin/bash
 
-mkdir final_para  #folder for final results
+mkdir final_para plots #folder for final results and figures
+find_subarry.py #create folder for each master station and put supporting stations inside
+cal_peak_time_amp.py #get peak amp and its arrival time for plotting
 
 N=`wc -l header_all | awk '{print $1}'`
 M=`expr $N / 30 `

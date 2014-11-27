@@ -15,7 +15,7 @@ codes for processing raw data downloaded from IRIS
 
 process:
 1) copy 'main.sh' to the main folder
-3) run main program 'get_final.sh' to calculate parameters for each station and then structural phase velocity
+3) run main program 'get_final.sh' to calculate parameters for each station and then structural phase velocity, plot all parameters
 
 post_process:
 stack

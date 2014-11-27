@@ -28,10 +28,14 @@ pstext  $R $J -P -O -V <<EOT>> $M
 EOT
 }
 
+awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
+min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
+max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`
+ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",($1*10/5)/10}'`
 M=`awk -F_ '{printf "AxAy_%.0fs.ps",$2}' ../period`
 R="-R-88/-65/24/48"
 J="-Jm0.5"
-T="-T$1/$2/$3"
+T="-T$min/$max/$ave"
 CPT="shear2.cpt"
 S="-Se0.25/0.95/0"
 plot_strain
