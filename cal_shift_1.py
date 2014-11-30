@@ -19,9 +19,7 @@ master_lat = float(master_info[3])
 velo = float(f_velo.read())
 px = sin(master_azi * pi / 180) / velo
 py = cos(master_azi * pi / 180) / velo
-f_pxpy = open('pxpy_main','w')
-f_pxpy.write(str(px) + ' '+str(py))
-f_pxpy.close()
+print >> open('pxpy_main','w'), str(px) + ' ' + str(py)
 #calculate shifting time based on the x and y distance between master and supporting stations
 st = read('TA.*.z')
 for tr in st:

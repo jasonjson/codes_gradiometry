@@ -93,9 +93,10 @@ Ax, Bx = np.linalg.lstsq(G,d_x)[0]
 d_y = np.array(Uzyy)
 Ay,By = np.linalg.lstsq(G,d_y)[0]
 #store Ax,Ay,Bx,By for amplitude correction and density
-f_AB=open('AB.dat','w')
-f_AB.write(master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By))
-f_AB.close()
+#f_AB=open('AB.dat','w')
+#f_AB.write(master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By))
+#f_AB.close()
+print >> open('AB.dat','w'), master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By)
 #get new velocity
 f_old_pxpy = open('pxpy_main','r') #original slowness
 pxpy = f_old_pxpy.read().split()
@@ -103,14 +104,16 @@ f_old_pxpy.close()
 new_px = float(pxpy[0]) + Bx 
 new_py = float(pxpy[1]) + By
 #update new slowness
-f_pxpy = open('pxpy.dat','w')
-f_pxpy.write(str(new_px)+' '+str(new_py))
-f_pxpy.close()
+#f_pxpy = open('pxpy.dat','w')
+#f_pxpy.write(str(new_px)+' '+str(new_py))
+#f_pxpy.close()
+print >> open('pxpy.dat','w'), str(new_px)+' '+str(new_py)
 #get azimuth varation, radiation pattern and geometrical spreading
-f_azi_rad_geo = open('azi_rad_geo.dat','w')
-new_azi = atan2(new_px,new_py)*180/pi
+#f_azi_rad_geo = open('azi_rad_geo.dat','w')
+new_azi = atan2(new_px,new_py) * 180 / pi
 azi_var = new_azi - master_azi
 rad_patt = master_dist * (Ax * cos(new_azi * pi / 180) - Ay * sin(new_azi * pi / 180))
 geo_spread = Ax * sin(new_azi * pi / 180) - Ay * cos(new_azi * pi / 180)
-f_azi_rad_geo.write(master_lon+' '+master_lat+' '+str(azi_var)+' '+str(rad_patt)+' '+str(geo_spread))
-f_azi_rad_geo.close()
+#f_azi_rad_geo.write(master_lon+' '+master_lat+' '+str(azi_var)+' '+str(rad_patt)+' '+str(geo_spread))
+#f_azi_rad_geo.close()
+print >> open('azi_rad_geo.dat','w'), master_lon+' '+master_lat+' '+str(azi_var)+' '+str(rad_patt)+' '+str(geo_spread)
