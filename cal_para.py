@@ -96,18 +96,16 @@ Ay,By = np.linalg.lstsq(G,d_y)[0]
 f_AB=open('AB.dat','w')
 f_AB.write(master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By))
 f_AB.close()
-#get velocity for shifting
-f_old_velo = open('velo_start','r') #original velo
-old_vel = float(f_old_velo.read())
-px = sin(master_azi*pi/180) / old_vel
-py = cos(master_azi*pi/180) / old_vel
-f_old_velo.close()
-new_px = px + Bx 
-new_py = py + By
-new_vel = 1. / sqrt(new_px ** 2+new_py ** 2)
-f_vel_new = open('velo_start','w')
-f_vel_new.write(str(new_vel))
-f_vel_new.close()
+#get new velocity
+f_old_pxpy = open('pxpy_main','r') #original slowness
+pxpy = f_old_pxpy.read().split()
+f_old_pxpy.close()
+new_px = float(pxpy[0]) + Bx 
+new_py = float(pxpy[1]) + By
+#update new slowness
+f_pxpy = open('pxpy.dat','w')
+f_pxpy.write(str(new_px)+' '+str(new_py))
+f_pxpy.close()
 #get azimuth varation, radiation pattern and geometrical spreading
 f_azi_rad_geo = open('azi_rad_geo.dat','w')
 new_azi = atan2(new_px,new_py)*180/pi

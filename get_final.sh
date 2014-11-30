@@ -22,9 +22,27 @@ cd $SCRATCH
 #prepare for the following computation
 pre_cal.sh
 
-#run the main program
+#run the main program, first iteration
 for i in `seq 1 15`; do
-    numactl -C +$((i-1)) ./main_$i.sh &
+    numactl -C +$((i-1)) ./main_$i.sh 1 &
+done
+wait
+
+#second iteration
+for i in `seq 1 15`; do
+	numactl -C +$((i-1)) ./main_$i.sh 234 &
+done
+wait
+
+#third iteration
+for i in `seq 1 15`; do
+	numactl -C +$((i-1)) ./main_$i.sh 234 &
+done
+wait
+
+#fourth iteration
+for i in `seq 1 15`; do
+	numactl -C +$((i-1)) ./main_$i.sh 234 &
 done
 wait
 

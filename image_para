@@ -76,3 +76,4 @@ text1=""
 text2="Azimuth variation"
 text3='deg'
 plot_results
+rm .gmt*

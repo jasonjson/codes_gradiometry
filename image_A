@@ -39,3 +39,5 @@ T="-T$min/$max/$ave"
 CPT="shear2.cpt"
 S="-Se0.25/0.95/0"
 plot_strain
+
+rm .gmt*

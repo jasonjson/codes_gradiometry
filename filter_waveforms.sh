@@ -3,7 +3,7 @@
 for i in 20 25 30 35 40 45 50 
 do
 	mkdir Period_$i
-	cp *.z geometry.dat header_all Period_$i
+	cp *.z geometry.dat edge_location.txt header_all Period_$i
 	cd Period_$i
 	echo 3.8 > velo_start
 	lower_freq=`awk -v a=$i 'BEGIN{print (1/a)*0.9}'`

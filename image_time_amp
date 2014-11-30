@@ -40,3 +40,4 @@ text3=""
 ave=`awk '{sum+=$3} END {print sum/NR}' ../peak_amp`
 awk -v a=$ave '{if($3/a>0.2 && $3/a<2)print $1,$2,$3/a }' ../peak_amp > sigma_c.dat
 plot_results
+rm .gmt*
