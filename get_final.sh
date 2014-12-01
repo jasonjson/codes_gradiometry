@@ -50,7 +50,7 @@ wait
 echo ${PWD##*/} > period #create period file for plotting and omega
 cp geometry.dat edge_location.txt final_para/
 cd final_para
-cat velo_* > dyna_velo
+cat pxpy_* > dyna_pxpy
 cat AB_* > AB_all
 cat azi_rad_geo_* > azi_rad_geo_all
 

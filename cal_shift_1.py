@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from obspy import read
-import geographiclib
 from obspy.core.util.geodetics import gps2DistAzimuth
 from math import sin, cos, pi
 from os import system
