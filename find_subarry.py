@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import geographiclib
+#import geographiclib
 from obspy.core.util.geodetics import gps2DistAzimuth
 from os import system
 
