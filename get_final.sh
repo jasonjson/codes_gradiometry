@@ -47,7 +47,6 @@ done
 wait
 
 #process all data
-echo ${PWD##*/} > period #create period file for plotting and omega
 cp geometry.dat edge_location.txt final_para/
 cd final_para
 cat pxpy_* > dyna_pxpy
