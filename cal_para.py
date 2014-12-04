@@ -58,7 +58,7 @@ for t in arange(peak_time-100,peak_time+102,2):
     #produce Ux_y data 
     f_amp = open('GPS_raw_x.dat','r')
     for line in f_amp:
-        if re.search('\s+'+master_lat+'\s+',line):
+        if re.search('\s+'+master_lat,line):
             Ux_y.append(float(line.split()[2])/1000000000)
     #produce Uzxx data
     system('mv GPS_raw_x.dat GPS_raw.dat')
@@ -76,8 +76,10 @@ for t in arange(peak_time-100,peak_time+102,2):
             Uzyy.append(float(line.split()[4])/1000000000000)   
     #produce Vx_y data, which include ground velocity data for master station within all time steps
     vel_data = []
+    l = 0
     for tr in st2:
-        vel_data.append(tr.data[int(t/tr.stats.delta)] / (-1000))
+        vel_data.append(tr.data[int((t-float(time_correction[l]))/tr.stats.delta)] / (-1000))
+	l += 1
     with open('loc_sta') as myfile:
         for i, line in enumerate(myfile,1):
             if master_lat in line:

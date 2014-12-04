@@ -1,6 +1,6 @@
 #!/bin/bash
 #calculate structural phase velocity
-omega=`awk -F_ '{printf "%f",2*3.14159/$2}' ../period`
+omega=`awk -F_ '{printf "%f",2*3.14159/$1}' ../period`
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)*1000}' AB_all > A_all
 percentage=`minmax -C A_all | awk '{print $2*0.005}'`
 damping=`minmax -C A_all | awk '{print ($2*0.04/6.371)^2}'`

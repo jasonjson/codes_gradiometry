@@ -16,7 +16,7 @@ f_loc = open('loc_sta','r') #location of stations within this folder
 lines = f_loc.readlines()
 st1 = read('shift.*.z') #read amplitude data
 st2 = read('vel.*.z') #read velocity data
-f_vel = open('vel.txt','w+') #we use 'w+' to add new lines to the same file
+#f_vel = open('vel.txt','w+') #we use 'w+' to add new lines to the same file
 for t in arange(peak_time-100,peak_time+102,2):
     amp_data = []
     time_correction = []
@@ -42,8 +42,11 @@ for t in arange(peak_time-100,peak_time+102,2):
         f_uy.write(line.split()[1]+' '+line.split()[2]+' '+' 0 '+str(amp_data[i])+' ' +str(per_error)+' '+str(per_error) +' 0.05 stat(0,0) test1 \n')
         i += 1
     vel_data = []
+    f_vel = open('vel'+str(t)+'.txt','w')
+    l = 0
     for tr in st2:
-        vel_data.append(tr.data[int(t/tr.stats.delta)])
+        vel_data.append(tr.data[int((t-float(time_correction[l]))/tr.stats.delta)])
+	l += 1
     j = 0
     for line in lines:
         f_vel.write(line.split()[1]+' '+line.split()[2]+' '+str(vel_data[j])+'\n')

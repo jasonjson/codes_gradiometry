@@ -25,7 +25,7 @@ J="-Jm0.5"
 
 #plot dynamical phase velocty
 paste st.txt dyna_pxpy | awk '{print $1,$2,1/sqrt($3^2+$4^2)}' > sigma_c.dat
-M=`awk -F_ '{printf "dyna_velo_%.0fs.ps",$2}' ../period`
+M=`awk -F_ '{printf "dyna_velo_%.0fs.ps",$1}' ../period`
 T="-T3/5/0.1"
 text1="0.2f0.2"
 text2="Dynamical phase velcocity"
@@ -34,7 +34,7 @@ plot_results
 
 #plot structural phase velocity
 awk '{print $1,$2,$7}' stru_velo > sigma_c.dat
-M=`awk -F_ '{printf "stru_velo_%.0fs.ps",$2}' ../period`
+M=`awk -F_ '{printf "stru_velo_%.0fs.ps",$1}' ../period`
 T="-T3/5/0.1"
 text1="0.2f0.2"
 text2="Structural phase velocity"
@@ -43,7 +43,7 @@ plot_results
 
 #plot correction
 paste stru_velo dyna_velo | awk '{print $1,$2,($7-$8)*1000}' > sigma_c.dat
-M=`awk -F_ '{printf "correction_%.0fs.ps",$2}' ../period`
+M=`awk -F_ '{printf "correction_%.0fs.ps",$1}' ../period`
 T="-T-500/500/100"
 text1="100f50"
 text2="velocity correction"
@@ -52,7 +52,7 @@ plot_results
 
 #plot radiation pattern
 awk '{if($4>=-50 && $4<=50 && $4!=0) print $1,$2,$4}' azi_rad_geo_all > sigma_c.dat
-M=`awk -F_ '{printf "radiation_pattern_%.0fs.ps",$2}' ../period`
+M=`awk -F_ '{printf "radiation_pattern_%.0fs.ps",$1}' ../period`
 T="-T-50/50/10"
 text1=""
 text2="Radiation pattern"
@@ -61,7 +61,7 @@ plot_results
 
 #plot geometrical spreading
 awk '{if($5>=-5 && $5<=5 && $5!=0) print $1,$2,$5}' azi_rad_geo_all > sigma_c.dat
-M=`awk -F_ '{printf "geometrical_spreading_%.0fs.ps",$2}' ../period`
+M=`awk -F_ '{printf "geometrical_spreading_%.0fs.ps",$1}' ../period`
 T="-T-5/5/1"
 text1=""
 text2="Geometrical spreading"
@@ -70,7 +70,7 @@ plot_results
 
 #plot azimuth variation
 awk '{if($3>=-30 && $3<=30 && $3!=0) print $1,$2,$3}' azi_rad_geo_all > sigma_c.dat
-M=`awk -F_ '{printf "azimuth_variation_%.0fs.ps",$2}' ../period`
+M=`awk -F_ '{printf "azimuth_variation_%.0fs.ps",$1}' ../period`
 T="-T-30/30/5"
 text1=""
 text2="Azimuth variation"
