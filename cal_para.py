@@ -113,5 +113,5 @@ print >> open('pxpy.dat','w'), str(new_px)+' '+str(new_py)
 new_azi = atan2(new_px,new_py) * 180 / pi
 azi_var = new_azi - master_azi
 rad_patt = master_dist * (Ax * cos(new_azi * pi / 180) - Ay * sin(new_azi * pi / 180))
-geo_spread = Ax * sin(new_azi * pi / 180) - Ay * cos(new_azi * pi / 180)
+geo_spread = 1000 * (Ax * sin(new_azi * pi / 180) - Ay * cos(new_azi * pi / 180))
 print >> open('azi_rad_geo.dat','w'), master_lon+' '+master_lat+' '+str(azi_var)+' '+str(rad_patt)+' '+str(geo_spread)
