@@ -5,7 +5,6 @@ from obspy.core.util.geodetics import gps2DistAzimuth
 from math import sin, cos, pi
 from os import system
 
-
 system('cp ../velo_start .') #the starting velocity for the first iteration
 system('saclst stlo stla f TA.*.z > loc_sta') #produce station location data file
 f_velo = open('velo_start','r')

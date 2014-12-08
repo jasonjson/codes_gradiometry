@@ -49,6 +49,7 @@ wait
 #process all data
 cp geometry.dat edge_location.txt final_para/
 cd final_para
+rm dyna_pxpy AB_all azi_rad_geo_all
 cat pxpy_* > dyna_pxpy
 cat AB_* > AB_all
 cat azi_rad_geo_* > azi_rad_geo_all
