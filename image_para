@@ -33,7 +33,7 @@ text3="km/s"
 plot_results
 
 #plot structural phase velocity
-awk '{print $1,$2,$7}' stru_velo > sigma_c.dat
+awk '{if($7>=3 && $7<=5)print $1,$2,$7}' stru_velo > sigma_c.dat
 M=`awk -F_ '{printf "stru_velo_%.0fs.ps",$1}' ../period`
 T="-T3/5/0.1"
 text1="0.2f0.2"
@@ -42,7 +42,8 @@ text3="km/s"
 plot_results
 
 #plot correction
-paste stru_velo dyna_velo | awk '{print $1,$2,($7-$8)*1000}' > sigma_c.dat
+awk '{print 1/sqrt($1^2+$2^2)}' dyna_pxpy > dyna_velo
+paste stru_velo dyna_velo | awk '{if(($7-$8)>-0.5 && ($7-$8)<=0.5)print $1,$2,($7-$8)*1000}' > sigma_c.dat
 M=`awk -F_ '{printf "correction_%.0fs.ps",$1}' ../period`
 T="-T-500/500/100"
 text1="100f50"
