@@ -1,7 +1,7 @@
 This repository contains all codes(python,bash,f77) for wave gradiometry
 
 
-pre_process:
+work flow:
 codes for processing raw data downloaded from IRIS
 1)copy seedfile into event folder
 2)run 'remove_bad_stations.sh' #remove bad stations
@@ -12,10 +12,7 @@ codes for processing raw data downloaded from IRIS
 5)run 'filter_waveforms.sh' 
 #filter the waveforms to 20 desired frequency bands
 #make sure only one Rayleigh phase is present, aftershocks may give other peaks
-
-process:
-1) copy 'main.sh' to the main folder
-3) run main program 'get_final.sh' to calculate parameters for each station and then structural phase velocity, plot all parameters
+6) inside each period folder, run 'get_final.sh' 
 
 post_process:
 stack
