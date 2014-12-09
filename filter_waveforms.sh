@@ -4,6 +4,8 @@ for i in 20 25 30 35 40 45 50
 do
 	mkdir Period_$i
 	cp *.z geometry.dat edge_location.txt header_all Period_$i
+	cp /home/yuanliu/codes/codes_gradiometry/main.sh Period_$i
+	cp /home/yuanliu/codes/codes_gradiometry/get_final.sh Period_$i
 	cd Period_$i
 	echo 3.8 > velo_start
 	echo $i > period
@@ -16,7 +18,9 @@ done
 for i in 55 60 65 70 75 80 90 100 110 120 130 140 150
 do
 	mkdir Period_$i
-	cp *.z geometry.dat edge_location.txt header_all Period_$i
+	cp *.z edge_location.txt geometry.dat header_all Period_$i
+	cp /home/yuanliu/codes/codes_gradiometry/main.sh Period_$i
+	cp /home/yuanliu/codes/codes_gradiometry/get_final.sh Period_$i
 	cd Period_$i
 	echo 4.0 > velo_start
 	echo $i > period
