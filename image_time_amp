@@ -33,7 +33,7 @@ plot_results
 
 #plot normalized peak amplitude
 M=`awk -F_ '{printf "peakamp_normalized_%.0fs.ps",$1}' ../period`
-T="-T0.2/2.2/0.2"
+T="-T0.2/2.2/0.05"
 text1="0.4f0.2"
 text2="Normalized Peak Amplitude"
 text3=""
