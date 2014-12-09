@@ -28,6 +28,7 @@ pstext  $R $J -P -O -V <<EOT>> $M
 EOT
 }
 
+awk '{print $3,$4}' ../header_all > st.txt
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
 min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
 max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`

@@ -19,7 +19,6 @@ psscale -Cvel.cpt -D2.2i/-0.5i/3.48i/0.2ih -O -B$text1:"$text2":/:"$text3": -E >
 }
 
 #set up R J parameter
-awk '{print $3,$4}' ../header_all > st.txt
 R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
 J="-Jm0.5"
 
