@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-#import geographiclib
 from obspy.core.util.geodetics import gps2DistAzimuth
 from os import system
 
@@ -23,3 +22,4 @@ for master_sta,master_loc in sta_lon_lat.items():
         supp_lat = float(supp_loc[2])
         if gps2DistAzimuth(master_lat,master_lon,supp_lat,supp_lon)[0] < 200000:
             system('cp '+supp_sta+' '+folder)
+

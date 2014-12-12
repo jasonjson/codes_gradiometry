@@ -23,7 +23,7 @@ awk '{print $3,$4}' ../header_all > st.txt
 R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
 J="-Jm0.5"
 #plot peak amplitude arrival time
-cp ../travel_time  sigma_c.dat
+eliminate_amp_time ../travel_time  sigma_c.dat
 M=`awk -F_ '{printf "phase_travel_time%.0fs.ps",$1}' ../period`
 T=`minmax -C sigma_c.dat | awk '{printf "-T%d\/%d\/%d",$5-100,$6+100,50}'`
 text1="100f50"
@@ -32,6 +32,7 @@ text3="s"
 plot_results
 
 #plot normalized peak amplitude
+eliminate_amp_time ../peak_amp peak_amp
 M=`awk -F_ '{printf "peakamp_normalized_%.0fs.ps",$1}' ../period`
 T="-T0.2/2.2/0.05"
 text1="0.4f0.2"
