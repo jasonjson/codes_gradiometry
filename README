@@ -5,14 +5,11 @@ work flow:
 codes for processing raw data downloaded from IRIS
 1)copy seedfile into event folder
 2)run 'remove_bad_stations.sh' #remove bad stations
-3)create bad file which contains bad stations
+3)create 'bad' which contains bad stations far away from main array, create 'edge' file for plotting
 4)run 'remove_reponse_origtime.sh' 
-#remove instrumental response and modify original time (find nzyear nzjday .. from TA.Q*z file)
-#geometry.dat is already created, produce edge_loction.txt if necessary
 5)run 'filter_waveforms.sh' 
-#filter the waveforms to 20 desired frequency bands
+#filter the waveforms to 20 desired frequency bands, and qsub the job
 #make sure only one Rayleigh phase is present, aftershocks may give other peaks
-6) inside each period folder, run 'get_final.sh' 
 
 post_process:
 stack
