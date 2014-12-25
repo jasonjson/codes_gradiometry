@@ -1,10 +1,9 @@
 #!/bin/bash
 #calculate structural phase velocity
 omega=`awk -F_ '{printf "%f",2*3.14159/$1}' ../period`
-mv AB_all AB_all_old
-eliminate_A AB_all_old AB_all
-awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)*1000}' AB_all > A_all
-eliminate_A A_all A_all_selected
+#remove larger or smaller AxAy values
+eliminate_A AB_all AB_all_selected
+awk 'function abs(x){return ((x < 0.0) ? -x : x)} {printf "%f\n%f\n",abs($3)*1000,abs($4)*1000}' AB_all_selected > A_all
 percentage=`minmax -C A_all | awk '{print $2*0.005}'`
 damping=`minmax -C A_all | awk '{print ($2*0.04/6.371)^2}'`
 awk -v a=$percentage 'BEGIN {print "lon lat Ve Vn Se Sn Cen Site Ref"} {print $1,$2,$3*1000,$4*1000,a,a,"0.05 stat(0,0) test1"}' AB_all > GPS_raw.dat
