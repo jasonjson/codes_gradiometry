@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #remove bad stations
-awk '{print "rm TA."$1"* SAC*TA_"$1"*"}' bad | sh
+awk '{print "rm TA."$1"* SAC*TA_"$1"*"}' bad | sh  #stations far away from the main array
+saclst b f *.z | awk '{if($2>500 || $2<-500) print "rm "$1}' | sh  #stations with abnormal b values
 saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
 create_geometry.py
 
