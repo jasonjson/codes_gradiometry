@@ -15,4 +15,7 @@ codes for processing raw data downloaded from IRIS
 6) inside each period folder, run 'get_final.sh' 
 
 post_process:
-stack
+averaging final dyanmic and structural phase velocities:
+1)stack dyna and stru velocities in the server, modify and run 'get_slowness.sh'
+2)averge, modify and run 'vel_stack.py'
+3)plot final figures, modify and run 'plot_final.sh', modifty -R and edge_location.txt
