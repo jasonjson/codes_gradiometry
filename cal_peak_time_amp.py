@@ -14,7 +14,7 @@ ave = sum(max_amp) / len(max_amp)
 sigma = sqrt(sum((max_amp - ones(len(max_amp))*ave)**2) / (len(max_amp) - 1))
 #find the larger or smaller amplitude values and remove the bad station
 for tr in st_before:
-    if abs(tr.data.max() - ave) >= 1.5 * sigma:
+    if abs(tr.data.max() - ave) >= 2 * sigma:
         system('rm *'+tr.id.split('.')[1]+'*')
 st_after = read('TA.*.z')
 f_time = open('travel_time','w')

@@ -48,7 +48,7 @@ void main(int argc, char **argv)
 	sigma=sqrt(sigma);
 	for(k=0;k<icount;k++)
 	{
-		if(ABS(col3[k]-avg)<=1.5*sigma)
+		if(ABS(col3[k]-avg)<=2*sigma)
 		{
 			fprintf(fresult,"%lf %lf %.10f %.10f %.10f %.10f\n" ,col1[k],col2[k],col3[k],col4[k],col5[k],col6[k]);
 		}
