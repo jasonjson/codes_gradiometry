@@ -58,7 +58,7 @@ for t in arange(peak_time-100,peak_time+102,2):
     #produce Ux_y data 
     f_amp = open('GPS_raw_x.dat','r')
     for line in f_amp:
-        if re.search('\s+'+master_lat,line):
+        if re.search('\s+'+master_lat+'[0\s]',line):
             Ux_y.append(float(line.split()[2])/1000000000)
     #produce Uzxx data
     system('mv GPS_raw_x.dat GPS_raw.dat')
