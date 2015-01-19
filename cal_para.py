@@ -82,7 +82,7 @@ for t in arange(peak_time-100,peak_time+102,2):
 	l += 1
     with open('loc_sta') as myfile:
         for i, line in enumerate(myfile,1):
-            if master_lat in line:
+	    if re.search('\s+'+master_lat+'[0\s]',line):
                 Vx_y.append(vel_data[i-1])
 #cal Ax Bx
 U_V = []
@@ -90,14 +90,19 @@ d_x = np.array(Uzxx)
 for i in range(len(Ux_y)):
     U_V.append([Ux_y[i],Vx_y[i]])
 G = np.array(U_V)
-Ax, Bx = np.linalg.lstsq(G,d_x)[0]
+a,b,c,d = np.linalg.lstsq(G,d_x)
+Ax,Bx = a
+singular_Ax,singular_Bx = d
 
 #cal Ay,By
 d_y = np.array(Uzyy)
-Ay,By = np.linalg.lstsq(G,d_y)[0]
+e,f,g,h = np.linalg.lstsq(G,d_y)
+Ay,By = e
+singular_Ay,singular_By = h
 
-#store Ax,Ay,Bx,By for amplitude correction and density
+#store Ax,Ay,Bx,By for amplitude correction and density, singular Ax Ay Bx By for error estimation
 print >> open('AB.dat','w'), master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By)
+print >> open('AB_singular.dat','w'),master_lon+' '+master_lat+' '+str(singular_Ax)+' '+str(singular_Ay)+' '+str(singular_Bx)+' '+str(singular_By)
 
 #get new velocity
 f_old_pxpy = open('pxpy_main','r') #original slowness
