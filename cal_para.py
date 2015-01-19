@@ -65,14 +65,14 @@ for t in arange(peak_time-100,peak_time+102,2):
     system('process_wg2 '+str(damping))
     f_strain_x = open('strain.out','r')
     for line in f_strain_x:
-        if re.search('^[\d\s]*'+master_lat,line):
+        if re.search('^[\d\s]*'+master_lat+'[0\s]',line):
             Uzxx.append(float(line.split()[3])/1000000000000)
     #produce Uzyy data
     system('mv GPS_raw_y.dat GPS_raw.dat')
     system('process_wg2 '+str(damping))
     f_strain_y = open('strain.out','r')
     for line in f_strain_y:
-        if re.search('^[\d\s]*'+master_lat,line):
+        if re.search('^[\d\s]*'+master_lat+'[0\s]',line):
             Uzyy.append(float(line.split()[4])/1000000000000)   
     #produce Vx_y data, which include ground velocity data for master station within all time steps
     vel_data = []
