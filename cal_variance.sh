@@ -1,6 +1,5 @@
 #!/bin/bash
 mkdir variance
-#for ((i=1;i<=30;i++))
 for ((i=1;i<=331;i++))
 do
 cd waveforms_$i
@@ -11,7 +10,7 @@ percentage1=`minmax biggest_z_amp | awk -F/ '{print $2}' | awk -F\> '{print $1*0
 damping_value_z=`minmax biggest_z_amp | awk -F/ '{print $2}' | awk -F\> '{print ($1*0.04/6.371)^2}'`
 numlines=`sed -n '$=' loc_all3`
 
-for((j=$zmintime+100;j<=$zmintime+102;j=j+2))
+for((j=$zmintime+100;j<=$zmintime+100;j=j+2))
 do
 awk -v a=$j '{print "cut",a,a+0.01; print "r",$1;print "lh depmen"}END{print "q"}' fileinfo2 | sac | grep -i depmen |awk '{print $3*1000000}' > dis_$j.txt
 awk -v a=$j '{print "cut",a,a+0.01; print "r",$2;print "lh depmen"}END{print "q"}' fileinfo2 | sac | grep -i depmen |awk '{print $3}' > vel.txt
@@ -46,10 +45,9 @@ paste v_zx.dat v_zy.dat > ../$stationname/sigma_square
 cd ../$stationname
 svd_px_variance
 svd_py_variance
-#ABx.dat contains calculated Ax and Bx, Vzx.dat containes variance of Ax and Bx, sigma_square contains sigma square
-paste ABx.dat Vzx.dat sigma_square  | awk '{print $2,sqrt($4*$5)}' > Bx_variance
-paste ABy.dat Vzy.dat sigma_square  | awk '{print $2,sqrt($4*$6)}' > By_variance
-paste Bx_variance By_variance > ../variance/B_variance_$stationname
+#ABx.dat contains Ax and Bx, Vzx.dat containes variance of Ax and Bx, sigma_square contains sigma square
+paste ABx.dat Vzx.dat sigma_square  | awk '{print $2,sqrt($4*$5)}' > Px_variance
+paste ABy.dat Vzy.dat sigma_square  | awk '{print $2,sqrt($4*$6)}' > Py_variance
+paste Px_variance Py_variance > ../variance/P_variance_$stationname
 cd ..
 done
-
