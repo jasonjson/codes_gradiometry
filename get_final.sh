@@ -49,7 +49,7 @@ wait
 #process all data
 cp geometry.dat edge_location.txt final_para/
 cd final_para
-rm dyna_pxpy AB_all* azi_rad_geo_all
+rm -rf dyna_pxpy AB_all* azi_rad_geo_all
 cat pxpy_* > dyna_pxpy
 cat AB_* > AB_all
 cat azi_rad_geo_* > azi_rad_geo_all
@@ -72,5 +72,6 @@ cd ..
 ### After everything is done, copy all of the results off of the SSD back to 
 ### where you submitted the job
 tar -cf $PBS_O_WORKDIR/ssdout.$PBS_JOBID.tar $SCRATCH/final_para 
+cd $PBS_O_WORKDIR
 tar -xf ssdout.$PBS_JOBID.tar
 mv scratch/yuanliu/$PBS_JOBID/final_para .
