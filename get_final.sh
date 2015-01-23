@@ -15,9 +15,9 @@ export PATH=/home/yuanliu/codes/gmt/gmt-4.5.11/bin:$PATH
 ### This changes your directory to the directory from where you used "qsub" to 
 ### submit this job
 cd $PBS_O_WORKDIR
-SCRATCH=/scratch/$USER/$PBS_JOBID/
-rsync -av $PBS_O_WORKDIR/ $SCRATCH/ 
-cd $SCRATCH
+mkdir /dev/shm/yuanliu
+rsync -av $PBS_O_WORKDIR/ /dev/shm/yuanliu 
+cd /dev/shm/yuanliu
 
 #prepare for the following computation
 pre_cal.sh
@@ -71,7 +71,8 @@ cal_stru_velo.sh
 cd ..
 ### After everything is done, copy all of the results off of the SSD back to 
 ### where you submitted the job
-tar -cf $PBS_O_WORKDIR/ssdout.$PBS_JOBID.tar $SCRATCH/final_para 
+tar -cf $PBS_O_WORKDIR/ssdout.$PBS_JOBID.tar /dev/shm/yuanliu/final_para 
+rm -rf /dev/shm/yuanliu
 cd $PBS_O_WORKDIR
 tar -xf ssdout.$PBS_JOBID.tar
-mv scratch/yuanliu/$PBS_JOBID/final_para .
+mv dev/shm/yuanliu/$PBS_JOBID/final_para .
