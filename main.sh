@@ -10,10 +10,6 @@ awk '{print "r TA."$1".z";print "chnhdr b",$2; print "w shift."$1".z"}END{print 
 awk '{print "r shift."$1".z";print "dif";print "w vel."$1".z"}END{print "q"}' shift_time | sac 
 cal_para.py #update phase velocity
 #store final results
-if [ ! -e 'pxpy.dat' ]
-then
-	cp pxpy_main pxpy.dat
-fi
 cp pxpy.dat pxpy_main #store new slowness for shifting and updating 
 mv pxpy.dat ../final_para/pxpy_$stationname
 mv AB.dat ../final_para/AB_$stationname
