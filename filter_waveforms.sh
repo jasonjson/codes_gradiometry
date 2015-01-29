@@ -13,8 +13,6 @@ do
 	lower_freq=`awk -v a=$i 'BEGIN{print (1/a)*0.9}'`
 	higher_freq=`awk -v a=$i 'BEGIN{print (1/a)*1.1}'`
 	awk -v x=$lower_freq -v y=$higher_freq '{print "r",$1; print "bp c "x,y" n 4 p 2"; print "w over"}END{print "q"}' header_all | sac
-	cal_peak_time_amp.py #get peak amp and its arrival time for plotting, remove stations with large or smaller amplitudes
-	saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
 	qsub ./get_final.sh
 	cd ..
 done
@@ -32,8 +30,6 @@ do
 	lower_freq=`awk -v a=$i 'BEGIN{print (1/a)*0.9}'`
 	higher_freq=`awk -v a=$i 'BEGIN{print (1/a)*1.1}'`
 	awk -v x=$lower_freq -v y=$higher_freq '{print "r",$1; print "bp c "x,y" n 4 p 2"; print "w over"}END{print "q"}' header_all | sac
-	cal_peak_time_amp.py #get peak amp and its arrival time for plotting, remove stations with large or smaller amplitudes
-	saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
 	qsub ./get_final.sh
 	cd ..
 done
