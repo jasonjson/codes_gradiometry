@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in 20 25 30 35 40 45 50 
+for i in 20 30 40 50 
 do
 	mkdir Period_$i
 	#cp *.z geometry.dat edge_location.txt header_all Period_$i
@@ -17,7 +17,7 @@ do
 	cd ..
 done
 
-for i in 55 60 65 70 75 80 90 100 110 120 130 140 150
+for i in 60 70 80 90 100 110 120 130 140 150
 do
 	mkdir Period_$i
 	#cp *.z edge_location.txt geometry.dat header_all Period_$i

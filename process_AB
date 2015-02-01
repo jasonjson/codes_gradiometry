@@ -17,8 +17,9 @@ make_x_for_fit_wg<<!
 0 0 0
 !
 
-process_prepare_gps
+process_prepare_gps_AB
 cp latlong_gps.dat output.dat || exit 1
+awk '{if(NR==1) print $1}' latlong_gps.dat > nout.dat
 
 make_x_for_output_wg<<!
 0 0 0
@@ -31,11 +32,34 @@ make_x_for_fit_wg<<!
 sparse_fit_with_GPS_wg<<!
 N
 Y
-N
+Y
 !
 
+sparse_velocity_wg<<!
+Y
+N
+0 0 0 
+!
+
+sparse_average_strain<<!
+N
+Y
+N
+Y
+!
 
 sparse_strain_wg<<!
 Y
 N
 !
+strain_cont_asia2
+
+sparse_rotation_solution<<!
+Y
+N
+0 0 0
+!
+
+gps_rotation_sparse
+
+velocity_diff -o GPS_rotated.out -m velocity.out -e 1 > stat.out

@@ -89,19 +89,14 @@ d_x = array(Uzxx)
 for i in range(len(Ux_y)):
     U_V.append([Ux_y[i],Vx_y[i]])
 G = array(U_V)
-a,b,c,d = linalg.lstsq(G,d_x)
-Ax,Bx = a
-singular_Ax,singular_Bx = d
+Ax,Bx = linalg.lstsq(G,d_x)[0]
 
 #cal Ay,By
 d_y = array(Uzyy)
-e,f,g,h = linalg.lstsq(G,d_y)
-Ay,By = e
-singular_Ay,singular_By = h
+Ay,By = linalg.lstsq(G,d_y)[0]
 
 #store Ax,Ay,Bx,By for amplitude correction and density, singular Ax Ay Bx By for error estimation
 print >> open('AB.dat','w'), master_lon+' '+master_lat+' '+str(Ax)+' '+str(Ay)+' '+str(Bx)+' '+str(By)
-print >> open('singular_AB.dat','w'),master_lon+' '+master_lat+' '+str(singular_Ax)+' '+str(singular_Ay)+' '+str(singular_Bx)+' '+str(singular_By)
 
 #get new velocity
 f_old_pxpy = open('pxpy_main','r') #original slowness

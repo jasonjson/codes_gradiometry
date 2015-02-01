@@ -2,9 +2,12 @@
 #PBS  -q normal
 #PBS  -N yuanliu_gradiometry
 #PBS  -l nodes=1:ppn=16
-#PBS  -l walltime=4:00:00
+#PBS  -l walltime=5:00:00
+#PBS  -m abe
+#PBs  -M johnny.lyy@gmail.com
 
-
+#get notified of status: begin, abort, end of a job
+#use this for the last script on the queue
 CODEPATH=/home/yuanliu/codes
 export PATH=$PATH:$CODEPATH/Shan_lib
 export PATH=$PATH:$CODEPATH/Sparse_Lucy

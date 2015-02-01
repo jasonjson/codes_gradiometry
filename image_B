@@ -7,7 +7,7 @@ surface sigma_r.dat  -Ggm0.grd -I2m  $R -T0.2
 grdraster 9 $R -I2m -Gout.grd
 grdgradient out.grd -A0 -Nt -Gtopo.grd
 psbasemap $R $J -Ba4f2/a4f2WSen  -K -V -X2.0 -Y2.0i -P > $M
-makecpt -Chaxby $T -Z > $CPT
+makecpt -Chaxby  $T -Z > $CPT
 grdimage gm0.grd -Itopo.grd -C$CPT  $R $J -O -V -K >> $M 
 grdcontour gm0.grd $R $J -C$CPT -B  -A-  -O -K -S6m -V >> $M
 psxy  edge_location.txt $R $J -O -K -G255 -L -W1 -V >>$M
@@ -15,29 +15,36 @@ psxy  edge_location.txt $R $J -O -K -G255 -L -W1 -V >>$M
 pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
 #pstext time.dat -R -J -P -O -K -V >> $M
 
+
 psvelo vel1.gmt $R -W0.01 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K  >>$M
 psvelo vel2.gmt $R -W3 -G0 $S  -L -Jm -A0.02/0.08/0.02 -O -K >>$M
-
+ 
 psvelo $R -W3 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K<<EOT>>$M
-289 40 5 0 0   0 0 0
+-122 40 0.1 0 0   0 0 0
 EOT
-psscale -C$CPT -D2i/-0.5i/3.2i/0.2ih  -O -B:"Laplacian of logrithmic amplitude":/:"10^-6 1/km^2": -K -E >>$M
+psscale -C$CPT -D2.5i/-0.5i/3.8i/0.3ih  -O -B:"Laplacian of phase":/:"10^-5 1/km^2": -K -E >>$M
 pstext  $R $J -P -O -V <<EOT>> $M 
-290 39 12 0.0 0 6 5x10^-3 1/km
+-120 39 12 0.0 0 6 1x10^-2 1/km
 EOT
 }
 
-awk '{print $3,$4}' ../header_all > st.txt
+omega=`awk -F_ '{printf "%f",2*3.14159/$1}' ../period`
+paste st.txt dyna_pxpy | awk -v a=$omega '{print $1,$2,$3*a,$4*a}' > loc_B 
+awk 'function abs(x){return ((x < 0.0) ? -x : x)} {printf "%f\n%f\n",abs($3),abs($4)}' loc_B > B_all
+percentage=`minmax -C B_all | awk  '{print $2*0.005}'`
+damping=`minmax -C B_all | awk  '{print ($2*0.04/6.371)^2}'`
+awk -v a=$percentage 'BEGIN {print "lon lat Ve Vn Se Sn Cen Site Ref"} {print $1,$2,-$3,-$4,a,a,"0.05 stat(0,0) test1"}' loc_B > GPS_raw.dat
+process_AB $damping
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
 min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
 max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`
 ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",($1*10/5)/10}'`
-M=`awk -F_ '{printf "AxAy_%.0fs.ps",$1}' ../period`
+M=`awk -F_ '{printf "BxBy_%.0fs.ps",$1}' ../period`
 R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
 J="-Jm0.5"
 T="-T$min/$max/$ave"
 CPT="shear2.cpt"
-S="-Se0.25/0.95/0"
+S="-Se15/0.95/0"
 plot_strain
 
 rm .gmt*
