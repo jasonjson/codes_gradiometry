@@ -17,7 +17,7 @@ master_lat = float(master_info[3])
 px_master = float(pxpy[0])
 py_master = float(pxpy[1])
 #calculate shifting time based on the x and y distance between master and supporting stations
-st = read('ABCNT.*.z')
+st = read('[ABCNT]*.z')
 for tr in st:
     dist = ((tr.stats.sac.stlo - master_lon) * 111.2 * cos(master_lat * pi / 180), (tr.stats.sac.stla - master_lat) * 111.2)
     sta_id = tr.id.split('.')[1]
