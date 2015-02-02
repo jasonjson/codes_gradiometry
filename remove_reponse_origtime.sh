@@ -8,7 +8,6 @@ saclst npts f TA.*.z | awk '{if($2<100000) print "rm "$1}' | sh #stations with l
 
 #remove instrumental response and modify original time
 ls TA.*.z | awk '{if(NR==1) print "saclst nzyear nzjday nzhour nzmin nzsec f "$1}' | sh > header.info
-saclst nzyear nzjday nzhour nzmin nzsec  f TA.*.z > header.info
 jyear=`awk '{print $2}' header.info`
 jday=`awk '{print $3}' header.info`
 jhour=`awk '{print $4}' header.info`

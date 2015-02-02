@@ -2,8 +2,9 @@
 
 #unzip seed file, change the file name
 rdseed -pdf *.seed
-rm `ls | grep -v 'TA'`
-ls *.SAC | awk '{x=$1;split(x,aa,".");print "mv "$1,aa[7]"."aa[8]".z"}' | sh
+#change the name of raw data to TA.
+ls SAC_* | awk -F_ '{print "mv "$0,$1"_"$2"_TA_"$4"_"$5"_"$6"_"$7}'  | sh
+ls *.SAC | awk '{x=$1;split(x,aa,".");print "mv "$1,"TA."aa[8]".z"}' | sh
 
 #plot bad stations
 saclst stlo stla f *.z > st.info
