@@ -2,7 +2,6 @@
 #create GPS_raw.dat for sparse codes
 
 from obspy import read
-import obspy.signal
 from numpy import arange,array,linalg
 from os import system
 from re import search
@@ -18,8 +17,7 @@ master_lon = master_info[2]
 master_dist = float(master_info[1])
 f_master.close()
 #using peak envelop to find time window
-#peak_time = int(master_tr.data.argmax() * master_tr.stats.delta)
-peak_time = int(obspy.signal.filter.envelope(master_tr.data).argmax() * master_tr.stats.delta)
+peak_time = int(master_tr.data.argmax() * master_tr.stats.delta)
 f_loc = open('loc_sta','r') #location of stations within this folder
 lines = f_loc.readlines()
 f_loc.close()
