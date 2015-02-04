@@ -10,10 +10,12 @@ awk '{print "r TA."$1".z";print "chnhdr b",$2; print "w shift."$1".z"}END{print 
 awk '{print "r shift."$1".z";print "dif";print "w vel."$1".z"}END{print "q"}' shift_time | sac 
 cal_para.py #update phase velocity
 #if calculation goes wrong for this station, write it down
-if [ ! -f pxpy.dat ]
+if [ ! -f pxpy.dat ] || (( `awk '{printf "%d",1/sqrt($1^2+$2^2)}' pxpy.dat` < 3 )) ||  (( `awk '{printf "%d",1/sqrt($1^2+$2^2)}' pxpy.dat` > 5 ))
 then
-	touch ../bad_stations
-	echo $stationname > ../bad_stations
+	echo $stationname >> ../final_para/bad_stations
+	cp pxpy_main pxpy.dat
+	awk '{print $2,$3,"0 0 0 0"}' loc_master > AB.dat
+	awk '{print $2,$3,"0 0 0"}' loc_master > azi_rad_geo.dat
 fi
 #store final results
 cp pxpy.dat pxpy_main #store new slowness for shifting and updating 
