@@ -17,7 +17,7 @@ codes for processing raw data downloaded from IRIS
 post_process:
 1) inside the 'events_done' folder, './get_slowness.sh' for all period bands
 2) 'vel_stack.py' get average velocity
-3) 'plot_stack_velo.sh' plot velocity figures
+3) Adjust cpt and -R option in 'plot_stack_velo.sh' to plot velocity figures
 
 calculate variance of px and py:
 1)(in waveforms_*)since sigma square is the same for every time step, we only need to calculate it once for each master station
