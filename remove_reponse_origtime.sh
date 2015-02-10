@@ -18,4 +18,4 @@ ls *.z | awk '{x=$1;split(x,aa,".");print $1,"SAC_"aa[2]}' | awk -v a=$jyear -v 
 
 saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
 create_geometry.py
-rm SAC* bad header.info
+rm SAC* header.info st.info st.txt location .gmt* *.seed

@@ -23,25 +23,25 @@ cd /dev/shm/yuanliu
 pre_cal.sh
 
 #run the main program, first iteration
-for i in `seq 1 15`; do
+for i in `seq 1 18`; do
     numactl -C +$((i-1)) ./main_$i.sh 1 &
 done
 wait
 
 #second iteration
-for i in `seq 1 15`; do
+for i in `seq 1 18`; do
 	numactl -C +$((i-1)) ./main_$i.sh 234 &
 done
 wait
 
 #third iteration
-for i in `seq 1 15`; do
+for i in `seq 1 18`; do
 	numactl -C +$((i-1)) ./main_$i.sh 234 &
 done
 wait
 
 #fourth iteration
-for i in `seq 1 15`; do
+for i in `seq 1 18`; do
 	numactl -C +$((i-1)) ./main_$i.sh 234 &
 done
 wait

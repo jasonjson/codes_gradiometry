@@ -16,5 +16,3 @@ pscoast $R -B5/4  -Na -JM15 -K -G255/239/213 -Y2i -W0.10p  -A5000  > station.ps
 psxy st.txt -R -J -Sc0.03i -K -G0/0/255 -O  >> station.ps
 awk '{ print $2+0.15,$3+0.05,"4 3 0 1",$1}' location  | pstext -R -J -P -O  >> station.ps
 
-#clean up
-rm st.info st.txt location .gmt*
