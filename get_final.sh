@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS  -q normal
-#PBS  -N yuanliu_gradiometry
+#PBS  -N jobname 
 #PBS  -l nodes=1:ppn=15
 #PBS  -l walltime=4:00:00
 

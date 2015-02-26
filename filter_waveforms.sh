@@ -8,6 +8,9 @@ do
 	cp /home/yuanliu/codes/codes_gradiometry/main.sh Period_$i
 	cp /home/yuanliu/codes/codes_gradiometry/get_final.sh Period_$i
 	cd Period_$i
+	#give the job a name so we can look up easily
+	path=`pwd | awk -F/ '{x=$8;split(x,aa,"_");print aa[1]"_"$9}'`
+	sed -i  "s/jobname/$path/g" get_final.sh
 	echo 3.8 > velo_start
 	echo $i > period
 	lower_freq=`awk -v a=$i 'BEGIN{print (1/a)*0.9}'`
@@ -25,6 +28,8 @@ do
 	cp /home/yuanliu/codes/codes_gradiometry/main.sh Period_$i
 	cp /home/yuanliu/codes/codes_gradiometry/get_final.sh Period_$i
 	cd Period_$i
+	path=`pwd | awk -F/ '{x=$8;split(x,aa,"_");print aa[1]"_"$9}'`
+	sed -i  "s/jobname/$path/g" get_final.sh
 	echo 4.0 > velo_start
 	echo $i > period
 	lower_freq=`awk -v a=$i 'BEGIN{print (1/a)*0.9}'`
