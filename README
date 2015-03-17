@@ -25,4 +25,6 @@ calculate variance of px and py:
 3) we are not calculating variance for A coefficient or strain, since they come from amplitude difference, which can be really small. There is no point of doing so.
 
 estimate density along the raypth
-1)find the lon and lat for the source, determine an even distribution edge stations, run find_polygon.py
+1)find the lon and lat for the source, determine an even distribution edge stations using station.ps, 'edge_stations.txt'
+2)run find_midpoint.py to get a denser distribution, 'polygon.txt'
+3)run find_polygon.py to find the points along the profile
