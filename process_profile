@@ -15,7 +15,7 @@ make_x_for_output_wg<<!
 0 0 0
 !
 
-sparse_strain<<!
+sparse_strain_wg<<!
 Y
 N
 !

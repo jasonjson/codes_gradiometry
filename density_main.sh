@@ -9,7 +9,7 @@ awk -v a=$percentage 'BEGIN {print "lon lat Ve Vn Se Sn Cen Site Ref"} {print $1
 process_AB $damping
 mv spline_fit.out spline_fit_A.out
 
-omega=`awk -F_ '{printf "%f",2*3.14159/$1}' period`
+omega=`awk -F_ '{printf "%f",2*3.14159/$1}' ../period`
 paste st.txt dyna_pxpy | awk -v a=$omega '{print $1,$2,$3*a,$4*a}' > loc_B
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {printf "%f\n%f\n",abs($3),abs($4)}' loc_B > B_all
 percentage=`minmax -C B_all | awk  '{print $2*0.005}'`

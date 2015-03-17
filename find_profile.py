@@ -18,10 +18,13 @@ def point_in_poly(x,y,poly):
                         inside = not inside
         p1x,p1y = p2x,p2y
     return inside
-source_lon=raw_input('please enter the source lon: ')
-source_lat=raw_input('please enter the source lat: ')
-#source_lon="-44.6219"
-#source_lat="26.5904"
+
+#read the souce location
+f_source = open('source_loc','r')
+loc = f_source.read().split()
+source_lon = loc[0]
+source_lat = loc[1]
+f_source.close()
 #put the edge station locations in polygon.txt, first column = lon, second column = lat
 f_edge = open('polygon.txt','r')
 polygon = []
