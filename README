@@ -23,3 +23,6 @@ calculate variance of px and py:
 1)(in waveforms_*)since sigma square is the same for every time step, we only need to calculate it once for each master station
 2)(in stationname) calculate variance for Bx By using svd_px_variance and svd_py_variance, then variance for Px and Py
 3) we are not calculating variance for A coefficient or strain, since they come from amplitude difference, which can be really small. There is no point of doing so.
+
+estimate density along the raypth
+1)find the lon and lat for the source, determine an even distribution edge stations, run find_polygon.py
