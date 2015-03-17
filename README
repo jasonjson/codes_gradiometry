@@ -27,4 +27,5 @@ calculate variance of px and py:
 estimate density along the raypth
 1)find the lon and lat for the source, determine an even distribution edge stations using station.ps, 'edge_stations.txt'
 2)run find_midpoint.py to get a denser distribution, 'polygon.txt'
-3)run find_polygon.py to find the points along the profile
+3)run density_main.sh to produce rhs and int at each point along the ray path, 'rhs_int_profile_*'
+4)cat rhs_int_profile_*, image_rhs, image_int

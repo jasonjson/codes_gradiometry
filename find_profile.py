@@ -33,7 +33,7 @@ i = 1
 for point in polygon:
     # use gmt command to find the lat and lon for points along great circle path
     p = subprocess.Popen('project -C'+source_lon+'/'+source_lat+' -E'+str(point[0])+'/'+str(point[1])+' -G5 -Q',shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    f_points_inside = open(str(i)+'_profile','w')
+    f_points_inside = open('profile_'+str(i),'w')
     for line in p.stdout.readlines():
         line = line.split()
         #if stations are inside the polygon, ouput the lon and lat to profile file

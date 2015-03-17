@@ -2,7 +2,6 @@
 
 cal_peak_time_amp.py #get peak amp and its arrival time for plotting, remove stations with large or smaller amplitudes
 saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
-rm -rf final_para plots
 mkdir final_para plots #folder for final results and figures
 find_subarry.py #create folder for each master station and put supporting stations inside
 

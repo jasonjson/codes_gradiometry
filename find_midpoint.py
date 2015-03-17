@@ -1,4 +1,4 @@
-#!bin/usr/env python
+#!/usr/bin/env python
 
 #find the edge stations from station.ps, try to include all edge stations
 f_polygon = open('edge_stations.txt','r')

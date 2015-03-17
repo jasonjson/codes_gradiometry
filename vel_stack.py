@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import math
-
 def vel_stack(infile,period):
     f = open(infile,'r')
     lines = f.readlines()
@@ -9,10 +8,8 @@ def vel_stack(infile,period):
     for line in lines:
         line = line.split()
         sta = tuple(line[0:3])
-        dyna_slowness = float(line[3])
-        stru_slowness = float(line[4])
-        x = dyna_slowness
-        y = stru_slowness
+        x = float(line[3])  #dynamic slowness
+        y = float(line[4])  #structural slowness
         #remove velocity larger than 4.5 or smaller than 3.5 or nan
         if x < 0.2222 or x > 0.2857 or math.isnan(x) or y < 0.2222 or y > 0.2857 or math.isnan(y):
             continue
@@ -38,6 +35,6 @@ def vel_stack(infile,period):
     outf.close()
 
 if __name__=='__main__':
-    period = [20,25,30,35,40,45,50,55,60,65,70,75,80,90,100,110,120,130,140,150]
+    period = [20,30,40,50,60,70,80,90,100,110,120,130,140,150]
     for i in period:
         vel_stack('velo_period_'+str(i),str(i))

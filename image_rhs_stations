@@ -1,0 +1,45 @@
+#!/bin/bash
+
+plot_strain() {
+blockmean sigma_c.dat $R  -I6m -V > sigma_r.dat
+surface sigma_r.dat  -Ggm0.grd -I2m  -R -T0.2
+grdraster 9 $R -I2m -Gout.grd
+grdgradient out.grd -A0 -Nt -Gtopo.grd
+psbasemap $R $J -Ba4f2/a4f2WSen -K -V -X2.0 -Y2.0i -P > $M
+makecpt -Chaxby -I $T -Z > vel.cpt
+grdimage gm0.grd  -Itopo.grd -Cvel.cpt  -R -J -O -V -K >> $M
+grdcontour gm0.grd  -R -J -Cvel.cpt -B  -A-  -O -K -S6m -V >> $M
+psxy edge_location.txt -R -J -O -K -G255 -L -W1 -V >> $M
+pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
+awk '{printf "-128 34 15 0 1 BL Period: %s s",$1}' ../period > time.dat
+pstext time.dat -R -J -P -O -K -V >> $M
+psscale -Cvel.cpt -D2.2i/-0.5i/3.48i/0.2ih -O -B/:"10e-5": -E >> $M
+}
+
+num_stations=`wc -l ../header_all | awk '{print $1}'`
+omega=`awk -F_ '{printf "%f",2*3.14159/$1}' ../period`
+paste st.txt dyna_pxpy | awk -v a=$omega '{print $1,$2,$3*a,$4*a}' > loc_B 
+awk 'function abs(x){return ((x < 0.0) ? -x : x)} {printf "%f\n%f\n",abs($3),abs($4)}' loc_B > B_all
+percentage=`minmax -C B_all | awk  '{print $2*0.005}'`
+damping=`minmax -C B_all | awk  '{print ($2*0.04/6.371)^2}'`
+awk -v a=$percentage 'BEGIN {print "lon lat Ve Vn Se Sn Cen Site Ref"} {print $1,$2,-$3,-$4,a,a,"0.05 stat(0,0) test1"}' loc_B > GPS_raw.dat
+process_AB $damping
+awk -v a=$num_stations '{if(NR>=4&&NR<=a+3)print $2,$3,$4/1000000,$5/1000000}' strain.out > lap_B
+paste AB_all loc_B lap_B | awk '{print $1,$2,(2*$3*$9+$13+2*$4*$10+$14)/sqrt($9^2+$10^2)}' > for_rho_all
+
+#plot in the x direction
+awk '{if($1!=-120.783 && $1!=-120.12 && $3<0.01 && $3>-0.01)print $1,$2,$3*1e4}' for_rho_all > sigma_c.dat
+awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
+min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
+max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`
+ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",($1*10/5)/10}'`
+M=`awk -F_ '{printf "rho_%.0fs.ps",$1}' ../period`
+R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
+J="-Jm0.5"
+T="-T$min/$max/$ave"
+CPT="shear2.cpt"
+S="-Se15/0.95/0"
+plot_strain
+
+
+rm .gmt*

@@ -36,9 +36,9 @@ damping=`minmax -C B_all | awk  '{print ($2*0.04/6.371)^2}'`
 awk -v a=$percentage 'BEGIN {print "lon lat Ve Vn Se Sn Cen Site Ref"} {print $1,$2,-$3,-$4,a,a,"0.05 stat(0,0) test1"}' loc_B > GPS_raw.dat
 process_AB $damping
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
-min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
-max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`
-ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",($1*10/5)/10}'`
+min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.1f\n",$1}'`
+max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.1f\n",$1}'`
+ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.1f\n",($1*10/5)/10}'`
 M=`awk -F_ '{printf "BxBy_%.0fs.ps",$1}' ../period`
 R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
 J="-Jm0.5"

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+plot_strain() {
+blockmean sigma_c.dat $R  -I6m -V > sigma_r.dat
+surface sigma_r.dat  -Ggm0.grd -I2m  -R -T0.2
+grdraster 9 $R -I2m -Gout.grd
+grdgradient out.grd -A0 -Nt -Gtopo.grd
+psbasemap $R $J -Ba4f2/a4f2WSen -K -V -X2.0 -Y2.0i -P > $M
+makecpt -Chaxby -I $T -Z > vel.cpt
+grdimage gm0.grd  -Itopo.grd -Cvel.cpt  -R -J -O -V -K >> $M
+grdcontour gm0.grd  -R -J -Cvel.cpt -B  -A-  -O -K -S6m -V >> $M
+#psxy edge_location.txt -R -J -O -K -G255 -L -W1 -V >> $M
+psxy points_inside -R -J -Sc0.02i -K -G255/0/255 -O  >> $M
+psxy polygon.txt -R -J -Sc0.06i -K -G0/0/255 -O  >> $M
+pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
+awk '{printf "-128 34 15 0 1 BL Period: %s s",$1}' period > time.dat
+pstext time.dat -R -J -P -O -K -V >> $M
+psscale -Cvel.cpt -D2.2i/-0.5i/3.48i/0.2ih -O -B:"Integration along profile": -E >> $M
+}
+
+#plot in the x direction
+awk '{print $1,$2,$4}' rhs_int_profile_all > sigma_c.dat
+awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
+min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
+max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`
+ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.1f\n",($1*10/5)/10}'`
+M=`awk -F_ '{printf "int_%.0fs.ps",$1}' period`
+R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
+J="-Jm0.5"
+T="-T$min/$max/$ave"
+CPT="shear2.cpt"
+S="-Se15/0.95/0"
+plot_strain
+
+
+rm .gmt*
