@@ -29,7 +29,7 @@ awk -v a=$num_stations '{if(NR>=4&&NR<=a+3)print $2,$3,$4/1000000,$5/1000000}' s
 paste AB_all loc_B lap_B | awk '{print $1,$2,(2*$3*$9+$13+2*$4*$10+$14)/sqrt($9^2+$10^2)}' > for_rho_all
 
 #plot in the x direction
-awk '{if($1!=-120.783 && $1!=-120.12 && $3<0.01 && $3>-0.01)print $1,$2,$3*1e4}' for_rho_all > sigma_c.dat
+awk '{print $1,$2,$3*1e4}' for_rho_all > sigma_c.dat
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
 min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
 max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`

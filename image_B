@@ -11,9 +11,9 @@ makecpt -Chaxby  $T -Z > $CPT
 grdimage gm0.grd -Itopo.grd -C$CPT  $R $J -O -V -K >> $M 
 grdcontour gm0.grd $R $J -C$CPT -B  -A-  -O -K -S6m -V >> $M
 psxy  edge_location.txt $R $J -O -K -G255 -L -W1 -V >>$M
-#awk -F_ '{printf "-77 26 15 0 1 BL Period:%.0fs",1/$1}' ../period > time.dat
 pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
-#pstext time.dat -R -J -P -O -K -V >> $M
+awk '{printf "-128 34 15 0 1 BL Period: %s s",$1}' ../period > time.dat
+pstext time.dat -R -J -P -O -K -V >> $M
 
 
 psvelo vel1.gmt $R -W0.01 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K  >>$M
