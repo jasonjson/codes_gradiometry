@@ -20,11 +20,11 @@ psvelo vel1.gmt $R -W0.01 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K  >>$M
 psvelo vel2.gmt $R -W3 -G0 $S  -L -Jm -A0.02/0.08/0.02 -O -K >>$M
  
 psvelo $R -W3 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K<<EOT>>$M
--122 40 0.1 0 0   0 0 0
+-109 44 0.1 0 0   0 0 0
 EOT
 psscale -C$CPT -D2.5i/-0.5i/3.8i/0.3ih  -O -B:"Laplacian of phase":/:"10^-5 1/km^2": -K -E >>$M
 pstext  $R $J -P -O -V <<EOT>> $M 
--120 39 12 0.0 0 6 1x10^-2 1/km
+-108 43.5 12 0.0 0 6 1x10^-2 1/km
 EOT
 }
 
@@ -38,7 +38,7 @@ process_AB $damping
 awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  > 1
 min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.1f\n",$1}'`
 max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.1f\n",$1}'`
-ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.1f\n",($1*10/5)/10}'`
+ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.2f\n",($1*10/5)/10}'`
 M=`awk -F_ '{printf "BxBy_%.0fs.ps",$1}' ../period`
 R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
 J="-Jm0.5"

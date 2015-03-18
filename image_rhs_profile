@@ -24,7 +24,7 @@ awk 'function abs(x){return ((x < 0.0) ? -x : x)} {print abs($3)}' sigma_c.dat  
 min=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "-%.0f\n",$1}'`
 max=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",$1}'`
 ave=`minmax 1 |awk -F/ '{print $2}' | awk -F\> '{printf "%.0f\n",($1*10/5)/10}'`
-M=`awk -F_ '{printf "rhs_%.0fs.ps",$1}' period`
+M=`awk -F_ '{printf "rhs_%.0fs_profile.ps",$1}' period`
 R=`minmax -C st.txt | awk '{printf "-R%.f\/%.f\/%.f\/%.f\n",$1-4,$2+4,$3-2,$4+2}'`
 J="-Jm0.5"
 T="-T$min/$max/$ave"

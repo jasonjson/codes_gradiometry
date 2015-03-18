@@ -36,7 +36,7 @@ do
 		awk -v a=$number_stations '{if(NR>=4&&NR<=a+3)print $4/1000000,$5/1000000}' strain.out > grad_BxBy_$i
 		#$1 lon $2 lat $3 Ax $4 Ay $5 omega*Bx $6 omega*By $7 grad(omega*Bx) $8 grad(omega*By)
 		paste AxAy_$i BxBy_$i grad_BxBy_$i | awk '{print $1-360,$2,-(2*$3*$5+$7+2*$4*$6+$8)/sqrt($5^2+$6^2)}' > rhs_profile
-		rm AxAy_$i BxBy_$i grad_BxBy_$i $i
+		rm AxAy_$i BxBy_$i grad_BxBy_$i
 		#integrate along the ray path
 		int_profile.py
 		#$1 lon $2 lat $3 rhs $4 int

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #find the edge stations from station.ps, try to include all edge stations
-f_polygon = open('edge_stations.txt','r')
+f_polygon = open('edge_location.txt','r')
 lon = []
 lat = []
 for line in f_polygon:

@@ -19,11 +19,11 @@ psvelo vel1.gmt $R -W0.01 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K  >>$M
 psvelo vel2.gmt $R -W3 -G0 $S  -L -Jm -A0.02/0.08/0.02 -O -K >>$M
 
 psvelo $R -W3 -G255/0/0 $S  -L -Jm -A0.08/0.15/0.1 -O -K<<EOT>>$M
-289 40 5 0 0   0 0 0
+-109 44 5 0 0   0 0 0
 EOT
 psscale -C$CPT -D2i/-0.5i/3.2i/0.2ih  -O -B:"Laplacian of logrithmic amplitude":/:"10^-6 1/km^2": -K -E >>$M
 pstext  $R $J -P -O -V <<EOT>> $M 
-290 39 12 0.0 0 6 5x10^-3 1/km
+-108 43.5 12 0.0 0 6 5x10^-3 1/km
 EOT
 }
 
