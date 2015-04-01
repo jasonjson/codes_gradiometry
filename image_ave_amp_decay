@@ -1,0 +1,43 @@
+#!/bin/bash
+
+plot_strain() {
+
+blockmean sigma_c.dat $R   -I2m -V > sigma_r.dat
+surface sigma_r.dat  -Ggm0.grd -I2m  $R -T0.2
+grdraster 9 $R -I2m -Gout.grd
+grdgradient out.grd -A0 -Nt -Gtopo.grd
+psbasemap $R $J -Ba4f2/a4f2WSen  -K -V -X2.0 -Y2.0i -P > $M
+#makecpt -Chaxby -I $T -Z > $CPT
+grdimage gm0.grd -Itopo.grd -C$CPT  $R $J -O -V -K >> $M 
+grdcontour gm0.grd $R $J -C$CPT -B  -A-  -O -K -S6m -V >> $M
+psxy  edge_location.txt $R $J -O -K -G255 -L -W1 -V >>$M
+psxy tecton_bound.gmt -m -R -J -O -K -W1.5p,red >> $M
+pstext nam_labels.dat -R -J -O -K -V >> $M
+awk -F_ '{printf "-122 29 15 0 1 BL Period: %.0fs",$1}' period > time.dat
+pscoast -Jm -R  -S248/248/255 -B -N2 -W4.0 -A5000  -O  -V -K >> $M
+pstext time.dat -R -J -P -O -K -V >> $M
+#psscale -C$CPT -D2.5i/-0.5i/3.8i/0.3ih  -B:"Apparent amplitude decay":/:"10^-3 sec/km^2": -O -E >>$M
+#psscale -C$CPT -D2.5i/-0.5i/3.8i/0.3ih  -B:"Focusing/defocusing corretion":/:"10^-3 sec/km^2": -O -E >>$M
+psscale -C$CPT -D2.5i/-0.5i/3.8i/0.3ih  -B:"Corrected amplitude decay":/:"10^-3 sec/km^2": -O -E >>$M
+}
+
+#awk '{if($3<0.4 && $3>-0.4)print $1,$2,$3}' amp_ave_southeast > sigma_c.dat
+#awk '{if($4<0.4 && $4>-0.4)print $1,$2,$4}' amp_ave_southeast > sigma_c.dat
+awk '{if($5<0.4 && $5>-0.4)print $1,$2,$5}' amp_ave_southeast > sigma_c.dat
+#M="averaged_appa_southesat.ps"
+#M="averaged_focus_southesat.ps"
+M="averaged_corr_southesat.ps"
+R="-R-125/-97/27/50"
+J="-Jm0.5"
+T="-T-0.4/0.4/0.1"
+CPT="shear2.cpt"
+S="-Se15/0.95/0"
+plot_strain
+
+#awk '{if($3<0.4 && $3>-0.4)print $1,$2,$3}' amp_ave_northwest > sigma_c.dat
+#awk '{if($4<0.4 && $4>-0.4)print $1,$2,$4}' amp_ave_northwest > sigma_c.dat
+awk '{if($5<0.4 && $5>-0.4)print $1,$2,$5}' amp_ave_northwest > sigma_c.dat
+#M="averaged_appa_northwest.ps"
+#M="averaged_focus_northwest.ps"
+M="averaged_corr_northwest.ps"
+plot_strain
