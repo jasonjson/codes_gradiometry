@@ -17,6 +17,7 @@ void main(int argc, char **argv)
 	double col4[MAX_LINE];
 	double col5[MAX_LINE];
 	double col6[MAX_LINE];
+	double col7[MAX_LINE];
 	int k,icount=0;
 	double avg=0.0,sigma=0.0;
 	if(argc!=3)
@@ -31,7 +32,7 @@ void main(int argc, char **argv)
 
 	while(!feof(fp))
 	{
-		fscanf(fp,"%lf %lf %lf %lf %lf %lf\n" ,&col1[icount],&col2[icount],&col3[icount],&col4[icount],&col5[icount],&col6[icount]);
+		fscanf(fp,"%lf %lf %lf %lf %lf %lf %lf\n" ,&col1[icount],&col2[icount],&col3[icount],&col4[icount],&col5[icount],&col6[icount],&col7[icount]);
 		icount++;
 	}
 	
@@ -50,7 +51,7 @@ void main(int argc, char **argv)
 	{
 		if(ABS(col3[k]-avg)<=2*sigma)
 		{
-			fprintf(fresult,"%lf %lf %.10f %.10f %.10f %.10f\n" ,col1[k],col2[k],col3[k],col4[k],col5[k],col6[k]);
+			fprintf(fresult,"%lf %lf %.10f %.10f %.10f %.10f\n" ,col1[k],col2[k],col4[k],col5[k],col6[k],col7[k]);
 		}
 	}
 	fclose(fp);

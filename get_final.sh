@@ -49,10 +49,10 @@ wait
 #process all data
 cp geometry.dat edge_location.txt final_para/
 cd final_para
-rm -rf dyna_pxpy AB_all* azi_rad_geo_all
-cat pxpy_* > dyna_pxpy
-cat AB_* > AB_all
-cat azi_rad_geo_* > azi_rad_geo_all
+#rm -rf dyna_pxpy AB_all* azi_rad_geo_all
+cat pxpy_[A-Z0-9]* > dyna_pxpy
+cat AB_[A-Z0-9]* > AB_all
+cat azi_rad_geo_[A-Z0-9]* > azi_rad_geo_all
 
 #calculate structural phase velocity
 cal_stru_velo.sh

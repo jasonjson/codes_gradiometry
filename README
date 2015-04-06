@@ -23,13 +23,3 @@ calculate variance of px and py:
 1)(in waveforms_*)since sigma square is the same for every time step, we only need to calculate it once for each master station
 2)(in stationname) calculate variance for Bx By using svd_px_variance and svd_py_variance, then variance for Px and Py
 3) we are not calculating variance for A coefficient or strain, since they come from amplitude difference, which can be really small. There is no point of doing so.
-
-estimate density along the raypth
-inside the event folder
-1)find the lon and lat for the source,'source.loc' 
-2)determine an even distribution edge stations using station.ps, 'edge_location.txt'
-3)run find_midpoint.py to get a denser distribution, 'polygon.txt'
-4) for i in 20 30 40 50 60 70 80 90 100 110 120 130 140 150; do cp polygon.txt source_loc Period_$i/final_para; cd Period_$i/final_para; density_main.sh; cat rhs_int_profile_[0-9]* > rhs_int_profile_all; image_rhs_profile; image_rhs_station; image_int; mv rhs*ps int*ps ../../plots; cd ../..; done
-4-1)copy source.loc and polygon.txt to each period/final_para folder
-4-2)run density_main.sh to produce rhs and int at each point along the ray path, 'rhs_int_profile_*'
-4-3)cat rhs_int_profile_* > rhs_int_profile_all, image_rhs, image_int
