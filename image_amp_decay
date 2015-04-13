@@ -37,7 +37,7 @@ H="Focusing/defocusing correction"
 plot_strain
 
 #plot corrceted amplitfication factor
-awk '{if($3<1 && $3>-1) print}' corr_amp > sigma_c.dat
+awk '{if($4<1 && $4>-1) print $1,$2,$4}' azi_amp_stru_velo > sigma_c.dat
 M=`awk -F_ '{printf "amp_decay_corrected_%.0fs.ps",$1}' ../period`
 H="Corrected amplitude decay"
 plot_strain

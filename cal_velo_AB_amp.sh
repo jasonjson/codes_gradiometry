@@ -12,7 +12,7 @@ awk 'function abs(x){return ((x < 0.0) ? -x : x)} {printf "%f\n%f\n",abs($3)*100
 percentage=`minmax -C A_all | awk '{print $2*0.005}'`
 damping=`minmax -C A_all | awk '{print ($2*0.04/6.371)^2}'`
 dense_lon_lat=`minmax -C st.txt | awk '{printf "%.f %.f %.f %.f\n",$1-1,$2+1,$3-1,$4+1}'`
-dense_points=`echo $dense_lon_lat | awk '{print ($2-$1)/0.1,($4-$3)/0.1}'`
+dense_points=`echo $dense_lon_lat | awk '{print ($2-$1)/0.2,($4-$3)/0.2}'`
 awk -v a=$percentage 'BEGIN {print "lon lat Ve Vn Se Sn Cen Site Ref"} {print $1,$2,$3*1000,$4*1000,a,a,"0.05 stat(0,0) test1"}' A_P_selected > GPS_raw.dat
 process_AB $damping $dense_lon_lat $dense_points
 num_stations=`awk '{if(NR==1) print $1}' output.dat`
@@ -45,4 +45,4 @@ paste A.dat B.dat | awk '{print $1-360,$2,2e3*($3*$7+$4*$8)}' > appa_amp
 awk '{print $2,$1,1e3*($3+$4)}' grad_B > focusing_amp
 
 #cal corrected local amplifcation factor
-paste appa_amp focusing_amp stru_velo | awk '{print $1,$2,$3+$6,$9}' > corr_amp_stru_velo
+paste appa_amp focusing_amp stru_velo B.dat | awk '{print $1,$2,atan2($12,$13)*180/3.1415926+180,$3+$6,$9}' > azi_amp_stru_velo
