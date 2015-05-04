@@ -10,9 +10,8 @@ codes for processing raw data downloaded from IRIS
 #remove instrumental response and modify original time (find nzyear nzjday .. from TA.Q*z file)
 #geometry.dat is already created, produce edge_loction.txt if necessary
 5)run 'filter_waveforms.sh' 
-#filter the waveforms to 20 desired frequency bands
+#filter the waveforms to 16 desired frequency bands
 #make sure only one Rayleigh phase is present, aftershocks may give other peaks
-6) inside each period folder, run 'get_final.sh' 
 
 post_process:
 1) inside the 'events_done' folder, './get_slowness.sh' for all period bands
