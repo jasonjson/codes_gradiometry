@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#usage: the script calculate structural phase velocity, A, B, grad A, grad B, apparent amplitude decay, focusing/defocusing and corrceted amplitude decay in a denser grid
+#usage: the script calculate structural phase velocity in a dense grid, A, B, grad A, grad B, apparent amplitude decay, focusing/defocusing and corrceted amplitude decay in a denser grid
 
 #remove larger or smaller magnitudes of A
 paste AB_all dyna_pxpy | awk '{print $1,$2,$3,$4,$7,$8}' > A_P_all
