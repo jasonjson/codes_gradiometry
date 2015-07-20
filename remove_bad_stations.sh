@@ -6,6 +6,8 @@ rdseed -pdf *.seed
 ls SAC_* | awk -F_ '{print "mv "$0,$1"_"$2"_TA_"$4"_"$5"_"$6"_"$7}'  | sh
 ls *.SAC | awk '{x=$1;split(x,aa,".");print "mv "$1,"TA."aa[8]".z"}' | sh
 
+#saclst stlo f TA.*.z | awk '{x=$1;split(x,aa,".");if($2<-117||$2>-95)print "rm TA."aa[2]"* SAC*TA_"aa[2]"*"}' | sh
+
 #plot bad stations
 saclst stlo stla f *.z > st.info
 awk '{x=$1;split(x,aa,".");print aa[2],$2,$3}' st.info > location
