@@ -4,7 +4,7 @@
 awk '{print "rm TA."$1"* SAC*TA_"$1"*"}' bad | sh  #stations far away from the main array
 
 #delete useless files
-saclst npts f TA.*.z | awk '{if($2<10000) print "rm "$1}' | sh #stations with less data points
+saclst npts f TA.*.z | awk '{if($2<100000) print "rm "$1}' | sh #stations with less data points
 
 #remove instrumental response and modify original time
 ls TA.*.z | awk '{if(NR==1) print "saclst nzyear nzjday nzhour nzmin nzsec f "$1}' | sh > header.info

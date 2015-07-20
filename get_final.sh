@@ -53,7 +53,7 @@ cd final_para
 cat pxpy_[A-Z0-9]* > dyna_pxpy
 cat AB_[A-Z0-9]* > AB_all
 cat azi_rad_geo_[A-Z0-9]* > azi_rad_geo_all
-ls pxpy_[A-Z0-9]* > ../good_sta
+#ls pxpy_[A-Z0-9]* > ../good_sta
 #calculate structural phase velocity
 
 cal_stru_velo.sh
@@ -71,7 +71,7 @@ cal_stru_velo.sh
 #mv *.ps ../plots
 cd ..
 #update st.txt to include good stations only
-awk '{x=$1;split(x,aa,"_");print "saclst stlo stla f *"aa[2]"*"}' good_sta | sh | awk '{print $2,$3}'> final_para/st.txt
+#awk '{x=$1;split(x,aa,"_");print "saclst stlo stla f *"aa[2]"*"}' good_sta | sh | awk '{print $2,$3}'> final_para/st.txt
 ### After everything is done, copy all of the results off of the SSD back to 
 ### where you submitted the job
 tar -cf $PBS_O_WORKDIR/ssdout.$PBS_JOBID.tar /dev/shm/yuanliu/final_para 

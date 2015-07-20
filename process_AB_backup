@@ -47,3 +47,27 @@ Y
 gps_rotation_sparse
 
 velocity_diff -o GPS_rotated.out -m velocity.out -e 1 > stat.out
+
+prepare_regular_lat_long<<!
+0 0 0
+5
+$2 $3 $4 $5
+$6 $7
+!
+
+cp regular_lat_long.dat output.dat
+
+make_x_for_output_wg<<!
+0 0 0
+!
+
+sparse_velocity_wg<<!
+Y
+0 0 0 
+!
+
+velocity
+
+sparse_strain_wg<<!
+Y
+!

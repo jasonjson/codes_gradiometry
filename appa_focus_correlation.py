@@ -4,7 +4,10 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy
+from os import system
 
+#assume sigma_c.dat contains gradients of B
+system("paste ../for_stru_wn/A_P_all.dat sigma_c.dat | awk '{print $2,$3,2000*($4*$6+$5*$7),$10}' > appa_focusing.dat")
 f_data = open('appa_focusing.dat','r')
 appa = []
 focus = []
@@ -19,14 +22,13 @@ ys = polynomial(focus)
 print coefficients
 print polynomial
 
-x=[-1,1]
-y=[1,-1]
+t = numpy.arange(-5., 5., 0.2)
 plt.plot(focus,appa,'r.')
-plt.plot(x,y,'b-',linewidth=3)
+plt.plot(t,t,'b-',linewidth=5)
 #plt.plot(focus,ys,linewidth=3)
 plt.gca().set_aspect('equal', adjustable='box')
-plt.xlim(-1, 1)
-plt.ylim(-1, 1)
+plt.xlim(-1.5, 1.5)
+plt.ylim(-1.5, 1.5)
 plt.xlabel('Focusing/defocusing correction(10^-3 s/km^2)')
 plt.ylabel('Apparent amplitude decay(10^-3 s/km^2)')
 plt.savefig('amp_appa_focusing_correlation.ps')

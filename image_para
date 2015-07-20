@@ -27,7 +27,7 @@ paste st.txt dyna_pxpy | awk '{print $1,$2,1/sqrt($3^2+$4^2)}' > sigma_c.dat
 M=`awk -F_ '{printf "dyna_velo_%.0fs.ps",$1}' ../period`
 T="-T3/5/0.1"
 text1="0.2f0.2"
-text2="Dynamical phase velcocity"
+text2="Dynamic phase velcocity"
 text3="km/s"
 plot_results
 
