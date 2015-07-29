@@ -14,7 +14,9 @@ $1
 0.25
 !
 
-process_prepare_gps
+num_points=`awk '{if(NR==3)print $1}' spline_fit.dat`
+sed -i "s/num_points/$num_points/g" process_prepare_gps
+./process_prepare_gps
 
 cp latlong_gps.dat output.dat || exit 1
 
