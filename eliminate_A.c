@@ -2,7 +2,7 @@
 #include <string.h>
 #include <math.h>
 
-#define MAX_LINE 1000
+#define MAX_LINE 10000
 #define MAX_CHAR 50
 #define ABS(x) (x>0?x:(-(x)))
 void main(int argc, char **argv)

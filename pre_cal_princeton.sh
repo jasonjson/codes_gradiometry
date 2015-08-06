@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#cal_peak_time_amp.py #get peak amp and its arrival time for plotting, remove stations with large or smaller amplitudes
+#saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
+#mkdir final_para plots #folder for final results and figures
+#find_subarry.py #create folder for each master station and put supporting stations inside
+
+N=`wc -l header_all | awk '{print $1}'`
+M=`expr $N / 91 `
+P=`expr $N / 91 + 1`
+for i in `seq 1 $M`
+do
+    start=`expr $i \* 91 - 90`
+    end=`expr $i \* 91`
+    cp main.sh  main_$i.sh
+    sed -i  "s/startline/$start/g" main_$i.sh  #in linux
+    sed -i  "s/endline/$end/g" main_$i.sh
+done
+
+for i in `seq $P $P`
+do
+    start=`expr $i \* 91 - 90`
+    cp main.sh main_$i.sh
+    sed -i  "s/startline/$start/g" main_$i.sh
+    sed -i  "s/endline/$N/g" main_$i.sh
+done

@@ -7,7 +7,6 @@ do
 	cp *.z geometry.dat header_all Period_$i
 	cp /home/yuanliu/codes/codes_gradiometry/main.sh Period_$i
 	cp /home/yuanliu/codes/codes_gradiometry/get_final.sh Period_$i
-	cp /home/yuanliu/codes/codes_gradiometry/process_prepare_gps Period_$i
 	cd Period_$i
 	#give the job a name so we can look up easily
 	path=`pwd | awk -F/ '{x=$8;split(x,aa,"_");print aa[1]"_"$9}'`
@@ -28,7 +27,6 @@ do
 	cp *.z geometry.dat header_all Period_$i
 	cp /home/yuanliu/codes/codes_gradiometry/main.sh Period_$i
 	cp /home/yuanliu/codes/codes_gradiometry/get_final.sh Period_$i
-	cp /home/yuanliu/codes/codes_gradiometry/process_prepare_gps Period_$i
 	cd Period_$i
 	path=`pwd | awk -F/ '{x=$8;split(x,aa,"_");print aa[1]"_"$9}'`
 	sed -i  "s/jobname/$path/g" get_final.sh
