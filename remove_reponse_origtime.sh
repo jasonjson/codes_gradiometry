@@ -4,7 +4,7 @@
 awk '{print "rm TA."$1"* SAC*TA_"$1"*"}' bad | sh  #stations far away from the main array
 
 #delete useless files
-saclst npts f TA.*.z | awk '{if($2<100000) print "rm "$1}' | sh #stations with less data points
+#saclst npts f TA.*.z | awk '{if($2<100000) print "rm "$1}' | sh #stations with less data points
 
 #remove instrumental response and modify original time
 ls TA.*.z | awk '{if(NR==1) print "saclst nzyear nzjday nzhour nzmin nzsec f "$1}' | sh > header.info
@@ -18,4 +18,4 @@ ls *.z | awk '{x=$1;split(x,aa,".");print $1,"SAC_"aa[2]}' | awk -v a=$jyear -v 
 
 saclst dist stlo stla baz f *.z | awk '{print $1,$2,$3,$4,$5-180}' > header_all
 create_geometry.py
-rm SAC* header.info st.info st.txt location .gmt* *.seed
+rm SAC* header.info st.info st.txt location .gmt* 
